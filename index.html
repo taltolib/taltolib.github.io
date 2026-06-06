@@ -1,93 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tolib Talibov — Flutter Developer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--bg:#0d0d0d;--surface:#161616;--border:#242424;--accent:#6C63FF;--accent2:#00D4AA;--text:#f0f0f0;--muted:#888;--dart:#00B4D8;--flutter:#54C5F8}
-    html{scroll-behavior:smooth}
-    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,13,13,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-    .nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between}
-    .nav-logo{font-weight:700;font-size:1rem;color:var(--text);text-decoration:none}
-    .nav-logo span{color:var(--accent)}
-    .nav-links{display:flex;gap:28px;list-style:none}
-    .nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s}
-    .nav-links a:hover{color:var(--text)}
-    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 24px 60px}
-    .hero-inner{max-width:700px;text-align:center}
-    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(108,99,255,.12);border:1px solid rgba(108,99,255,.3);border-radius:100px;padding:6px 16px;font-size:.8rem;color:var(--accent);margin-bottom:28px;font-weight:500}
-    .dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-    h1{font-size:clamp(2.2rem,6vw,3.8rem);font-weight:700;letter-spacing:-1.5px;line-height:1.1;margin-bottom:20px}
-    h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .hero-sub{font-size:1.05rem;color:var(--muted);max-width:520px;margin:0 auto 36px}
-    .hero-stack{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:40px}
-    .tag{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:5px 14px;font-size:.8rem;color:var(--muted);font-weight:500}
-    .tag.flutter{border-color:rgba(84,197,248,.4);color:var(--flutter)}
-    .tag.dart{border-color:rgba(0,180,216,.4);color:var(--dart)}
-    .tag.python{border-color:rgba(255,212,0,.3);color:#FFD400}
-    .hero-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font-size:.9rem;font-weight:600;text-decoration:none;transition:all .2s;border:none}
-    .btn-primary{background:var(--accent);color:#fff}
-    .btn-primary:hover{background:#5a52e0;transform:translateY(-1px)}
-    .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
-    .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
-    section{max-width:1100px;margin:0 auto;padding:80px 24px}
-    .section-label{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:10px}
-    .section-title{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;letter-spacing:-.5px;margin-bottom:48px}
-    .divider{border:none;border-top:1px solid var(--border);max-width:1100px;margin:0 auto}
-    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;transition:border-color .2s,transform .2s;position:relative;overflow:hidden}
-    .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:0;transition:opacity .2s}
-    .card:hover{border-color:rgba(108,99,255,.4);transform:translateY(-3px)}
-    .card:hover::before{opacity:1}
-    .card-icon{font-size:2rem;margin-bottom:16px}
-    .card-type{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:8px}
-    .card h3{font-size:1.15rem;font-weight:700;margin-bottom:10px;letter-spacing:-.3px}
-    .card p{color:var(--muted);font-size:.875rem;line-height:1.65;margin-bottom:20px}
-    .card-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px}
-    .card-tag{background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.2);border-radius:6px;padding:3px 10px;font-size:.72rem;color:var(--accent);font-weight:500}
-    .card-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:600;color:var(--text);text-decoration:none;padding:8px 16px;background:rgba(255,255,255,.06);border-radius:8px;transition:background .2s}
-    .card-link:hover{background:rgba(108,99,255,.2);color:var(--accent)}
-    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
-    .skill-group{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
-    .skill-group h4{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:14px}
-    .skill-list{display:flex;flex-direction:column;gap:8px}
-    .skill-item{font-size:.875rem;color:var(--text);display:flex;align-items:center;gap:8px}
-    .skill-item::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent2);flex-shrink:0}
-    .contact-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center;max-width:600px;margin:0 auto}
-    .contact-box h2{font-size:1.8rem;font-weight:700;margin-bottom:12px;letter-spacing:-.5px}
-    .contact-box p{color:var(--muted);margin-bottom:32px}
-    .contact-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-    footer{text-align:center;padding:32px 24px;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border)}
-    @media(max-width:640px){.nav-links{display:none}.contact-box{padding:28px 20px}}
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Tolib Talibov — Flutter Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
+  --accent:#f78166;--accent2:#ff7b72;--blue:#58a6ff;--green:#3fb950;
+  --text:#e6edf3;--muted:#7d8590;--subtle:#484f58;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,17,23,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:700;font-size:.95rem;color:var(--text);text-decoration:none;letter-spacing:-.3px}
+.nav-logo span{background:linear-gradient(90deg,var(--accent),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 24px 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(247,129,102,.12),transparent);pointer-events:none}
+.hero-inner{max-width:720px;text-align:center;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(247,129,102,.1);border:1px solid rgba(247,129,102,.3);border-radius:100px;padding:5px 14px;font-size:.78rem;color:var(--accent);margin-bottom:24px;font-weight:500}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+h1{font-size:clamp(2.6rem,7vw,4.2rem);font-weight:700;letter-spacing:-2px;line-height:1.05;margin-bottom:18px}
+.grad{background:linear-gradient(135deg,var(--accent),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1rem;color:var(--muted);max-width:540px;margin:0 auto 36px}
+.hero-stack{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:36px}
+.tag{border-radius:6px;padding:7px 18px;font-size:.9rem;font-weight:600;border:1px solid}
+.tag.flutter{background:rgba(88,166,255,.1);border-color:rgba(88,166,255,.35);color:#58a6ff}
+.tag.dart{background:rgba(63,185,80,.1);border-color:rgba(63,185,80,.35);color:#3fb950}
+.tag.sm{font-size:.78rem;padding:4px 12px;font-weight:500;background:var(--surface);border-color:var(--border);color:var(--muted)}
+.hero-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border-radius:8px;font-size:.88rem;font-weight:600;text-decoration:none;transition:all .2s;border:1px solid transparent}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-color:rgba(247,129,102,.5)}
+.btn-primary:hover{opacity:.88;transform:translateY(-1px)}
+.btn-outline{background:var(--surface2);color:var(--text);border-color:var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+
+/* SECTION */
+.sec{max-width:1100px;margin:0 auto;padding:80px 24px}
+.sec-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:8px}
+.sec-title{font-size:clamp(1.5rem,3.5vw,2rem);font-weight:700;letter-spacing:-.5px;margin-bottom:44px}
+.divider{border:none;border-top:1px solid var(--border);max-width:1100px;margin:0 auto}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s,transform .2s}
+.card:hover{border-color:rgba(247,129,102,.4);transform:translateY(-2px)}
+.card-header{padding:22px 22px 16px}
+.card-type{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:6px}
+.card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px;letter-spacing:-.2px}
+.card p{color:var(--muted);font-size:.85rem;line-height:1.6;margin-bottom:14px}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.card-tag{background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:2px 9px;font-size:.72rem;color:var(--muted);font-weight:500}
+.card-link{display:inline-flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600;color:var(--blue);text-decoration:none;padding:6px 0;transition:color .2s}
+.card-link:hover{color:var(--accent)}
+.card-link svg{width:12px;height:12px}
+
+/* SCROLL GALLERY */
+.gallery{position:relative;overflow:hidden;border-top:1px solid var(--border);background:var(--surface2)}
+.gallery-track{display:flex;gap:0;animation:scroll-left 28s linear infinite;width:max-content}
+.gallery-track:hover{animation-play-state:paused}
+.gallery-track img{width:110px;height:220px;object-fit:cover;flex-shrink:0;border-right:1px solid var(--border);display:block}
+.gallery-fade-l,.gallery-fade-r{position:absolute;top:0;bottom:0;width:40px;z-index:2;pointer-events:none}
+.gallery-fade-l{left:0;background:linear-gradient(90deg,var(--surface2),transparent)}
+.gallery-fade-r{right:0;background:linear-gradient(-90deg,var(--surface2),transparent)}
+@keyframes scroll-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.gallery-placeholder{padding:20px;color:var(--subtle);font-size:.8rem;text-align:center}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.skills-bottom{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+.skill-group{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}
+.skill-group h4{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:12px}
+.skill-list{display:flex;flex-direction:column;gap:7px}
+.skill-item{font-size:.85rem;color:var(--text);display:flex;align-items:center;gap:8px}
+.skill-item::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--green);flex-shrink:0}
+
+/* CONTACT */
+.contact-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:44px;text-align:center;max-width:580px;margin:0 auto;position:relative;overflow:hidden}
+.contact-box::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:120px;background:radial-gradient(ellipse,rgba(247,129,102,.15),transparent);pointer-events:none}
+.contact-box h2{font-size:1.7rem;font-weight:700;margin-bottom:10px;letter-spacing:-.5px}
+.contact-box p{color:var(--muted);margin-bottom:28px;font-size:.92rem}
+.contact-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+footer{text-align:center;padding:28px 24px;color:var(--subtle);font-size:.78rem;border-top:1px solid var(--border)}
+@media(max-width:640px){.nav-links{display:none}.skills-grid,.skills-bottom{grid-template-columns:1fr}.contact-box{padding:24px 18px}}
+</style>
 </head>
 <body>
-<nav><div class="nav-inner"><a class="nav-logo" href="#"><span>T</span>olib Talibov</a><ul class="nav-links"><li><a href="#projects">Projects</a></li><li><a href="#skills">Skills</a></li><li><a href="#contact">Contact</a></li></ul></div></nav>
-<div class="hero"><div class="hero-inner"><div class="hero-badge"><span class="dot"></span>Open to work &middot; Available now</div><h1>Flutter Developer<br/><span>building apps</span> that matter</h1><p class="hero-sub">Mobile Software Engineer focused on Flutter/Dart with backend experience in Python &amp; FastAPI. Based in Samarkand / Tashkent, Uzbekistan.</p><div class="hero-stack"><span class="tag flutter">Flutter</span><span class="tag dart">Dart</span><span class="tag">BLoC</span><span class="tag">Firebase</span><span class="tag">go_router</span><span class="tag python">Python</span><span class="tag python">FastAPI</span><span class="tag">REST API</span><span class="tag">Git</span></div><div class="hero-links"><a class="btn btn-primary" href="https://github.com/taltolib" target="_blank">GitHub</a><a class="btn btn-outline" href="mailto:tolibtal0@gmail.com">Email Me</a><a class="btn btn-outline" href="https://t.me/taltolib" target="_blank">Telegram</a></div></div></div>
+
+<nav>
+<div class="nav-inner">
+<a class="nav-logo" href="#"><span>Tolib</span> Talibov</a>
+<ul class="nav-links">
+<li><a href="#projects">Projects</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</div>
+</nav>
+
+<div class="hero">
+<div class="hero-inner">
+<div class="hero-badge"><span class="dot"></span>Open to work &middot; Flutter Developer</div>
+<h1>Mobile Engineer<br/><span class="grad">Flutter &amp; Dart</span></h1>
+<p class="hero-sub">Building cross-platform mobile apps with clean architecture, BLoC state management and pixel-perfect UI. Based in Tashkent / Samarkand, Uzbekistan.</p>
+<div class="hero-stack">
+<span class="tag flutter">Flutter</span>
+<span class="tag dart">Dart</span>
+<span class="tag sm">BLoC</span>
+<span class="tag sm">Firebase</span>
+<span class="tag sm">go_router</span>
+<span class="tag sm">FastAPI</span>
+<span class="tag sm">REST API</span>
+<span class="tag sm">Git</span>
+</div>
+<div class="hero-links">
+<a class="btn btn-primary" href="https://github.com/taltolib" target="_blank">GitHub Profile</a>
+<a class="btn btn-outline" href="mailto:tolibtal0@gmail.com">Email</a>
+<a class="btn btn-outline" href="https://t.me/taltolib" target="_blank">Telegram</a>
+</div>
+</div>
+</div>
+
 <hr class="divider"/>
-<section id="projects"><div class="section-label">Work &amp; Projects</div><div class="section-title">What I've built</div><div class="projects-grid">
-<div class="card"><div class="card-icon">&#9992;&#65039;</div><div class="card-type">Commercial &middot; Flutter</div><h3>EasyBooking &mdash; Travel App</h3><p>B2C cross-platform travel app for searching and booking tours. Built full Settings module, custom widget library, REST API integration with BLoC state management and go_router navigation.</p><div class="card-tags"><span class="card-tag">Flutter</span><span class="card-tag">BLoC</span><span class="card-tag">go_router</span><span class="card-tag">REST API</span><span class="card-tag">Firebase</span><span class="card-tag">Dio</span></div><span style="font-size:.8rem;color:var(--muted)">&#128274; Private repo &middot; Global Travel Space</span></div>
-<div class="card"><div class="card-icon">&#128218;</div><div class="card-type">Pet Project &middot; Flutter</div><h3>Progress App &mdash; Language Learning</h3><p>Gamified vocabulary app with 56,000-word local database, Firebase Phone Auth + Google Sign-In, progress tracking, levels and animated UI components.</p><div class="card-tags"><span class="card-tag">Flutter</span><span class="card-tag">SQLite</span><span class="card-tag">Firebase Auth</span><span class="card-tag">Provider</span><span class="card-tag">Dart</span></div><a class="card-link" href="https://github.com/taltolib/progress_app_language_learn" target="_blank">View on GitHub &rarr;</a></div>
-<div class="card"><div class="card-icon">&#128179;</div><div class="card-type">Pet Project &middot; Flutter + Python</div><h3>Finance App &mdash; Personal Analytics</h3><p>Auto-reads transactions via Telegram API in real-time. Kanban board for expense categorization, charts, filters by category and full Telegram SMS auth flow.</p><div class="card-tags"><span class="card-tag">Flutter</span><span class="card-tag">Telegram API</span><span class="card-tag">Dart</span><span class="card-tag">REST API</span></div><a class="card-link" href="https://github.com/taltolib/finance_app" target="_blank">View on GitHub &rarr;</a></div>
-<div class="card"><div class="card-icon">&#9881;&#65039;</div><div class="card-type">Backend &middot; Python</div><h3>Finance Backend &mdash; FastAPI</h3><p>Server logic for Telegram API integration. Sends SMS codes, finds bot, parses transactions and delivers data via REST API. Redis caching.</p><div class="card-tags"><span class="card-tag">FastAPI</span><span class="card-tag">Python</span><span class="card-tag">Redis</span><span class="card-tag">Telegram API</span></div><a class="card-link" href="https://github.com/taltolib/finance_backend" target="_blank">View on GitHub &rarr;</a></div>
-<div class="card"><div class="card-icon">&#127758;</div><div class="card-type">Backend &middot; Python</div><h3>Corendon &mdash; Tourism API</h3><p>Integration layer between Corendon external tourism platform API and internal system. Handles conversion and normalization of flights, search and offers.</p><div class="card-tags"><span class="card-tag">Python</span><span class="card-tag">FastAPI</span><span class="card-tag">REST API</span></div><a class="card-link" href="https://github.com/taltolib/Corendon" target="_blank">View on GitHub &rarr;</a></div>
-<div class="card"><div class="card-icon">&#9878;&#65039;</div><div class="card-type">Test Task &middot; Flutter</div><h3>BMI Calculator</h3><p>Clean BMI calculator with age, weight, height and gender. Personalized health status with visual indicator. Built as a technical test assignment.</p><div class="card-tags"><span class="card-tag">Flutter</span><span class="card-tag">Dart</span></div><a class="card-link" href="https://github.com/taltolib/bmi_calculator" target="_blank">View on GitHub &rarr;</a></div>
-</div></section>
+
+<div class="sec" id="projects">
+<div class="sec-label">Work &amp; Projects</div>
+<div class="sec-title">What I've built</div>
+<div class="projects-grid">
+
+<div class="card">
+<div class="card-header">
+<div class="card-type">Commercial &middot; Flutter</div>
+<h3>EasyBooking &mdash; B2C Travel App</h3>
+<p>Cross-platform travel app for searching and booking tours. Settings module, custom widget library, BLoC, go_router, REST API integration.</p>
+<div class="card-tags"><span class="card-tag">Flutter</span><span class="card-tag">BLoC</span><span class="card-tag">go_router</span><span class="card-tag">REST API</span><span class="card-tag">Firebase</span><span class="card-tag">Dio</span></div>
+<span style="font-size:.78rem;color:var(--subtle)">Private &middot; Global Travel Space</span>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<div class="card-type">Pet Project &middot; Flutter</div>
+<h3>Progress App &mdash; Language Learning</h3>
+<p>Gamified vocabulary app. 56,000-word local DB, Firebase Phone Auth + Google Sign-In, levels, progress tracking, smooth animations.</p>
+<div class="card-tags"><span class="card-tag">Flutter</span><span class="card-tag">SQLite</span><span class="card-tag">Firebase Auth</span><span class="card-tag">Provider</span><span class="card-tag">Dart</span></div>
+<a class="card-link" href="https://github.com/taltolib/progress_app_language_learn" target="_blank">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
+</div>
+<div class="gallery">
+<div class="gallery-fade-l"></div>
+<div class="gallery-track" id="progress-track"></div>
+<div class="gallery-fade-r"></div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<div class="card-type">Pet Project &middot; Flutter + Python</div>
+<h3>Finance App &mdash; Personal Analytics</h3>
+<p>Reads transactions via Telegram API in real-time. Kanban expense board, charts, category filters, Telegram SMS auth.</p>
+<div class="card-tags"><span class="card-tag">Flutter</span><span class="card-tag">Telegram API</span><span class="card-tag">Dart</span><span class="card-tag">REST API</span></div>
+<a class="card-link" href="https://github.com/taltolib/finance_app" target="_blank">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
+</div>
+<div class="gallery">
+<div class="gallery-fade-l"></div>
+<div class="gallery-track" id="finance-track"></div>
+<div class="gallery-fade-r"></div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<div class="card-type">Backend &middot; Python</div>
+<h3>Finance Backend &mdash; FastAPI</h3>
+<p>Telegram API integration server. Sends SMS codes, finds bot, parses transactions, delivers via REST API with Redis caching.</p>
+<div class="card-tags"><span class="card-tag">FastAPI</span><span class="card-tag">Python</span><span class="card-tag">Redis</span><span class="card-tag">Telegram API</span></div>
+<a class="card-link" href="https://github.com/taltolib/finance_backend" target="_blank">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<div class="card-type">Backend &middot; Python</div>
+<h3>Corendon &mdash; Tourism API</h3>
+<p>Integration layer between Corendon external API and internal system. Data conversion and normalization of flights and search results.</p>
+<div class="card-tags"><span class="card-tag">Python</span><span class="card-tag">FastAPI</span><span class="card-tag">REST API</span></div>
+<a class="card-link" href="https://github.com/taltolib/Corendon" target="_blank">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header">
+<div class="card-type">Test Task &middot; Flutter</div>
+<h3>BMI Calculator</h3>
+<p>Clean BMI calculator with age, weight, height and gender inputs. Personalized health status with visual indicator.</p>
+<div class="card-tags"><span class="card-tag">Flutter</span><span class="card-tag">Dart</span></div>
+<a class="card-link" href="https://github.com/taltolib/bmi_calculator" target="_blank">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
+</div>
+</div>
+
+</div>
+</div>
+
 <hr class="divider"/>
-<section id="skills"><div class="section-label">Tech Stack</div><div class="section-title">Skills &amp; Tools</div><div class="skills-grid">
-<div class="skill-group"><h4>Flutter / Mobile</h4><div class="skill-list"><span class="skill-item">Flutter &amp; Dart</span><span class="skill-item">BLoC / Provider</span><span class="skill-item">go_router</span><span class="skill-item">REST API / Dio / Http</span><span class="skill-item">Firebase Auth &amp; FCM</span><span class="skill-item">SQLite / SharedPreferences</span><span class="skill-item">Clean Architecture</span></div></div>
+
+<div class="sec" id="skills">
+<div class="sec-label">Tech Stack</div>
+<div class="sec-title">Skills &amp; Tools</div>
+<div class="skills-grid">
+<div class="skill-group"><h4>Flutter / Mobile</h4><div class="skill-list"><span class="skill-item">Flutter &amp; Dart</span><span class="skill-item">BLoC / Provider</span><span class="skill-item">go_router</span><span class="skill-item">REST API / Dio / Http</span><span class="skill-item">Firebase Auth &amp; FCM &amp; Firestore</span><span class="skill-item">SQLite / SharedPreferences</span><span class="skill-item">Clean Architecture</span></div></div>
 <div class="skill-group"><h4>Backend</h4><div class="skill-list"><span class="skill-item">Python</span><span class="skill-item">FastAPI</span><span class="skill-item">PostgreSQL</span><span class="skill-item">Redis</span><span class="skill-item">Telegram API</span><span class="skill-item">REST API design</span></div></div>
+</div>
+<div class="skills-bottom">
 <div class="skill-group"><h4>Tools &amp; Design</h4><div class="skill-list"><span class="skill-item">Git &amp; GitHub</span><span class="skill-item">Firebase Console</span><span class="skill-item">Figma</span><span class="skill-item">UI/UX Design</span><span class="skill-item">Graphic Design</span></div></div>
 <div class="skill-group"><h4>Languages</h4><div class="skill-list"><span class="skill-item">Uzbek &mdash; Native</span><span class="skill-item">Russian &mdash; Fluent</span><span class="skill-item">English &mdash; Technical</span></div></div>
-</div></section>
+</div>
+</div>
+
 <hr class="divider"/>
-<section id="contact"><div class="contact-box"><div class="section-label" style="margin-bottom:12px">Get In Touch</div><h2>Let's work together</h2><p>I'm open to Flutter developer roles. Feel free to reach out!</p><div class="contact-links"><a class="btn btn-primary" href="mailto:tolibtal0@gmail.com">tolibtal0@gmail.com</a><a class="btn btn-outline" href="https://t.me/taltolib" target="_blank">Telegram</a><a class="btn btn-outline" href="https://github.com/taltolib" target="_blank">GitHub</a><a class="btn btn-outline" href="https://www.linkedin.com/in/tolib-talibov-7a32b43b2" target="_blank">LinkedIn</a></div></div></section>
-<footer><p>&copy; 2026 Tolib Talibov &middot; Flutter Developer &middot; Tashkent / Samarkand, Uzbekistan</p></footer>
+
+<div class="sec" id="contact">
+<div class="contact-box">
+<div class="sec-label" style="margin-bottom:10px">Get In Touch</div>
+<h2>Let's work together</h2>
+<p>Open to Flutter developer roles. Feel free to reach out!</p>
+<div class="contact-links">
+<a class="btn btn-primary" href="mailto:tolibtal0@gmail.com">tolibtal0@gmail.com</a>
+<a class="btn btn-outline" href="https://t.me/taltolib" target="_blank">Telegram</a>
+<a class="btn btn-outline" href="https://github.com/taltolib" target="_blank">GitHub</a>
+<a class="btn btn-outline" href="https://www.linkedin.com/in/tolib-talibov-7a32b43b2" target="_blank">LinkedIn</a>
+</div>
+</div>
+</div>
+
+<footer><p>&copy; 2026 Tolib Talibov &middot; Flutter Developer &middot; Tashkent / Samarkand</p></footer>
+
+<script>
+function buildGallery(trackId, imgs) {
+  const track = document.getElementById(trackId);
+  if (!track) return;
+  const doubled = [...imgs, ...imgs];
+  doubled.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = '';
+    img.loading = 'lazy';
+    img.onerror = function(){ this.style.display='none'; };
+    track.appendChild(img);
+  });
+}
+
+const progressImgs = Array.from({length:13},(_,i)=>
+  `https://raw.githubusercontent.com/taltolib/progress_app_language_learn/master/assets/image/screen/${i+1}.jpg`
+);
+
+const financeImgs = Array.from({length:13},(_,i)=>
+  `https://raw.githubusercontent.com/taltolib/finance_app/master/assets/image_github/i_${i+1}.jpg`
+);
+
+buildGallery('progress-track', progressImgs);
+buildGallery('finance-track', financeImgs);
+</script>
+
 </body>
 </html>
