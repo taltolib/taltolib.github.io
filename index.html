@@ -8,8 +8,8 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
-  --accent:#f78166;--text:#e6edf3;--muted:#7d8590;--subtle:#484f58;
+--bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
+--accent:#f78166;--text:#e6edf3;--muted:#7d8590;--subtle:#484f58;
 }
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
@@ -19,27 +19,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,17,23,.92
 .nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{font-weight:700;font-size:.95rem;color:var(--text);text-decoration:none}
 .nav-logo span{color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:20px}
 .nav-links{display:flex;gap:24px;list-style:none}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--accent)}
+.lang-switcher{display:flex;gap:4px;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:3px}
+.lang-btn{background:none;border:none;color:var(--muted);font-size:.75rem;font-weight:600;cursor:pointer;padding:3px 8px;border-radius:5px;transition:all .2s;font-family:inherit;letter-spacing:.5px}
+.lang-btn.active{background:var(--accent);color:#fff}
+.lang-btn:hover:not(.active){color:var(--text)}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 24px 60px;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background-image:url('bg.jpg');background-size:cover;background-position:center;opacity:.35;z-index:0}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,17,23,.4) 0%,rgba(13,17,23,.85) 100%);z-index:1}
 .hero-inner{max-width:720px;text-align:center;position:relative;z-index:2}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(247,129,102,.1);border:1px solid rgba(247,129,102,.35);border-radius:100px;padding:5px 16px;font-size:.78rem;color:var(--accent);margin-bottom:24px;font-weight:500}
 .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
 h1{font-size:clamp(2.8rem,7vw,4.4rem);font-weight:700;letter-spacing:-2px;line-height:1.05;margin-bottom:18px}
 .grad{color:var(--accent)}
-.hero-sub{font-size:1rem;color:var(--muted);max-width:540px;margin:0 auto 36px}
-.hero-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border-radius:8px;font-size:.88rem;font-weight:600;text-decoration:none;transition:all .2s;border:1px solid transparent}
-.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.btn-primary:hover{opacity:.88;transform:translateY(-1px)}
-.btn-outline{background:var(--surface2);color:var(--text);border-color:var(--border)}
-.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.hero-sub{font-size:1rem;color:var(--muted);max-width:540px;margin:0 auto 0}
 
 /* SECTION */
 .sec{max-width:1100px;margin:0 auto;padding:80px 24px}
@@ -64,9 +62,10 @@ h1{font-size:clamp(2.8rem,7vw,4.4rem);font-weight:700;letter-spacing:-2px;line-h
 /* GALLERY */
 .gallery{position:relative;overflow:hidden;border-top:1px solid var(--border);background:var(--surface2)}
 .gallery-track{display:flex;animation:scroll-left 28s linear infinite;width:max-content}
-.gallery-track.no-anim{animation:none}
+.gallery-track.no-anim{animation:none;justify-content:center;width:100%}
 .gallery-track:hover{animation-play-state:paused}
 .gallery-track img{width:110px;height:220px;object-fit:cover;flex-shrink:0;border-right:1px solid var(--border);display:block}
+.gallery-track.no-anim img{border-right:1px solid var(--border)}
 .gallery-fade-l,.gallery-fade-r{position:absolute;top:0;bottom:0;width:40px;z-index:2;pointer-events:none}
 .gallery-fade-l{left:0;background:linear-gradient(90deg,var(--surface2),transparent)}
 .gallery-fade-r{right:0;background:linear-gradient(-90deg,var(--surface2),transparent)}
@@ -105,11 +104,18 @@ footer{text-align:center;padding:28px 24px;color:var(--subtle);font-size:.78rem;
 <nav>
 <div class="nav-inner">
 <a class="nav-logo" href="#"><span>Tolib</span> Talibov</a>
+<div class="nav-right">
 <ul class="nav-links">
-<li><a href="#projects">Projects</a></li>
-<li><a href="#skills">Skills</a></li>
-<li><a href="#contact">Contact</a></li>
+<li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
+<li><a href="#skills" data-i18n="nav_skills">Skills</a></li>
+<li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
 </ul>
+<div class="lang-switcher">
+<button class="lang-btn active" onclick="setLang('en')">EN</button>
+<button class="lang-btn" onclick="setLang('ru')">RU</button>
+<button class="lang-btn" onclick="setLang('uz')">UZ</button>
+</div>
+</div>
 </div>
 </nav>
 
@@ -117,85 +123,59 @@ footer{text-align:center;padding:28px 24px;color:var(--subtle);font-size:.78rem;
 <div class="hero-bg"></div>
 <div class="hero-overlay"></div>
 <div class="hero-inner">
-<div class="hero-badge"><span class="dot"></span>Open to work &middot; Flutter Developer</div>
 <h1>Mobile Engineer<br/><span class="grad">Flutter &amp; Dart</span></h1>
-<p class="hero-sub">Building cross-platform mobile apps with clean architecture, BLoC state management and pixel-perfect UI. Tashkent / Samarkand, Uzbekistan.</p>
-<div class="hero-links">
-<a class="btn btn-primary" href="https://github.com/taltolib" target="_blank">GitHub Profile</a>
-<a class="btn btn-outline" href="mailto:tolibtal0@gmail.com">Email</a>
-<a class="btn btn-outline" href="https://t.me/taltolib" target="_blank">Telegram</a>
-</div>
+<p class="hero-sub" data-i18n="hero_sub">Building cross-platform mobile apps with clean architecture, BLoC state management and pixel-perfect UI. Tashkent / Samarkand, Uzbekistan.</p>
 </div>
 </div>
 
 <hr class="divider"/>
 
 <div class="sec" id="projects">
-<div class="sec-label">Work &amp; Projects</div>
-<div class="sec-title">What I've built</div>
+<div class="sec-label" data-i18n="projects_label">Work &amp; Projects</div>
+<div class="sec-title" data-i18n="projects_title">What I've built</div>
 <div class="projects-grid">
 
 <div class="card">
 <div class="card-header">
-<div class="card-type">Commercial &middot; Flutter</div>
-<h3>EasyBooking &mdash; B2C Travel App</h3>
-<p>Cross-platform travel app for searching and booking tours. Settings module, custom widget library, BLoC, go_router, REST API integration.</p>
+<div class="card-type" data-i18n="easy_type">Commercial &middot; Flutter</div>
+<h3 data-i18n="easy_title">EasyBooking &mdash; B2C Travel App</h3>
+<p data-i18n="easy_desc">Cross-platform travel app for searching and booking tours. Settings module, custom widget library, BLoC, go_router, REST API integration.</p>
 <div class="card-tags"><span class="card-tag">Flutter</span><span class="card-tag">BLoC</span><span class="card-tag">go_router</span><span class="card-tag">REST API</span><span class="card-tag">Firebase</span><span class="card-tag">Dio</span></div>
-<span style="font-size:.78rem;color:var(--subtle)">Private &middot; Global Travel Space</span>
+<span style="font-size:.78rem;color:var(--subtle)" data-i18n="easy_private">Private &middot; Global Travel Space</span>
 </div>
 </div>
 
 <div class="card">
 <div class="card-header">
-<div class="card-type">Pet Project &middot; Flutter</div>
-<h3>Progress App &mdash; Language Learning</h3>
-<p>Gamified vocabulary app. 56,000-word local DB, Firebase Phone Auth + Google Sign-In, levels, progress tracking, smooth animations.</p>
+<div class="card-type" data-i18n="progress_type">Pet Project &middot; Flutter</div>
+<h3 data-i18n="progress_title">Progress App &mdash; Language Learning</h3>
+<p data-i18n="progress_desc">Gamified vocabulary app. 56,000-word local DB, Firebase Phone Auth + Google Sign-In, levels, progress tracking, smooth animations.</p>
 <div class="card-tags"><span class="card-tag">Flutter</span><span class="card-tag">SQLite</span><span class="card-tag">Firebase Auth</span><span class="card-tag">Provider</span><span class="card-tag">Dart</span></div>
-<a class="card-link" href="https://github.com/taltolib/progress_app_language_learn" target="_blank">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
+<a class="card-link" href="https://github.com/taltolib/progress_app_language_learn" target="_blank" data-i18n="view_github">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
 </div>
 <div class="gallery"><div class="gallery-fade-l"></div><div class="gallery-track" id="progress-track"></div><div class="gallery-fade-r"></div></div>
 </div>
 
 <div class="card">
 <div class="card-header">
-<div class="card-type">Pet Project &middot; Flutter + Python</div>
-<h3>Finance App &mdash; Personal Analytics</h3>
-<p>Reads transactions via Telegram API in real-time. Kanban expense board, charts, category filters, Telegram SMS auth.</p>
+<div class="card-type" data-i18n="finance_type">Pet Project &middot; Flutter + Python</div>
+<h3 data-i18n="finance_title">Finance App &mdash; Personal Analytics</h3>
+<p data-i18n="finance_desc">Reads transactions via Telegram API in real-time. Kanban expense board, charts, category filters, Telegram SMS auth.</p>
 <div class="card-tags"><span class="card-tag">Flutter</span><span class="card-tag">Telegram API</span><span class="card-tag">Dart</span><span class="card-tag">REST API</span></div>
-<a class="card-link" href="https://github.com/taltolib/finance_app" target="_blank">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
+<a class="card-link" href="https://github.com/taltolib/finance_app" target="_blank" data-i18n="view_github">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
 </div>
 <div class="gallery"><div class="gallery-fade-l"></div><div class="gallery-track" id="finance-track"></div><div class="gallery-fade-r"></div></div>
 </div>
 
 <div class="card">
 <div class="card-header">
-<div class="card-type">Pet Project &middot; Flutter</div>
-<h3>BMI Calculator</h3>
-<p>Clean BMI calculator with age, weight, height and gender inputs. Personalized health status with visual indicator.</p>
+<div class="card-type" data-i18n="bmi_type">Pet Project &middot; Flutter</div>
+<h3 data-i18n="bmi_title">BMI Calculator</h3>
+<p data-i18n="bmi_desc">Clean BMI calculator with age, weight, height and gender inputs. Personalized health status with visual indicator.</p>
 <div class="card-tags"><span class="card-tag">Flutter</span><span class="card-tag">Dart</span></div>
-<a class="card-link" href="https://github.com/taltolib/bmi_calculator" target="_blank">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
+<a class="card-link" href="https://github.com/taltolib/bmi_calculator" target="_blank" data-i18n="view_github">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
 </div>
-<div class="gallery"><div class="gallery-fade-l"></div><div class="gallery-track" id="bmi-track"></div><div class="gallery-fade-r"></div></div>
-</div>
-
-<div class="card">
-<div class="card-header">
-<div class="card-type">Backend &middot; Python</div>
-<h3>Finance Backend &mdash; FastAPI</h3>
-<p>Telegram API integration server. Sends SMS codes, finds bot, parses transactions, delivers via REST API with Redis caching.</p>
-<div class="card-tags"><span class="card-tag">FastAPI</span><span class="card-tag">Python</span><span class="card-tag">Redis</span><span class="card-tag">Telegram API</span></div>
-<a class="card-link" href="https://github.com/taltolib/finance_backend" target="_blank">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
-</div>
-</div>
-
-<div class="card">
-<div class="card-header">
-<div class="card-type">Backend &middot; Python</div>
-<h3>Corendon &mdash; Tourism API</h3>
-<p>Integration layer between Corendon external API and internal system. Data conversion and normalization of flights and search results.</p>
-<div class="card-tags"><span class="card-tag">Python</span><span class="card-tag">FastAPI</span><span class="card-tag">REST API</span></div>
-<a class="card-link" href="https://github.com/taltolib/Corendon" target="_blank">View on GitHub <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg></a>
-</div>
+<div class="gallery"><div class="gallery-fade-l"></div><div class="gallery-track no-anim" id="bmi-track"></div><div class="gallery-fade-r"></div></div>
 </div>
 
 </div>
@@ -204,89 +184,234 @@ footer{text-align:center;padding:28px 24px;color:var(--subtle);font-size:.78rem;
 <hr class="divider"/>
 
 <div class="sec" id="skills">
-<div class="sec-label">Tech Stack</div>
-<div class="sec-title">Skills &amp; Tools</div>
+<div class="sec-label" data-i18n="skills_label">Technical Skills</div>
+<div class="sec-title" data-i18n="skills_title">What I work with</div>
 <div class="skills-top">
-<div class="skill-group"><h4>Flutter / Mobile</h4><div class="skill-list"><span class="skill-item">Flutter &amp; Dart</span><span class="skill-item">BLoC / Provider</span><span class="skill-item">go_router</span><span class="skill-item">REST API / Dio / Http</span><span class="skill-item">Firebase Auth &amp; FCM &amp; Firestore</span><span class="skill-item">SQLite / SharedPreferences</span><span class="skill-item">Clean Architecture</span></div></div>
-<div class="skill-group"><h4>Backend</h4><div class="skill-list"><span class="skill-item">Python</span><span class="skill-item">FastAPI</span><span class="skill-item">PostgreSQL</span><span class="skill-item">Redis</span><span class="skill-item">Telegram API</span><span class="skill-item">REST API design</span></div></div>
+<div class="skill-group">
+<h4 data-i18n="skill_flutter">Flutter / Mobile</h4>
+<ul class="skill-list">
+<li class="skill-item">Flutter &amp; Dart</li>
+<li class="skill-item">BLoC / Provider</li>
+<li class="skill-item">go_router</li>
+<li class="skill-item">REST API / Dio / Http</li>
+<li class="skill-item">Firebase Auth &amp; FCM</li>
+<li class="skill-item">SQLite / SharedPreferences</li>
+<li class="skill-item">Clean Architecture</li>
+</ul>
+</div>
+<div class="skill-group">
+<h4 data-i18n="skill_backend">Backend</h4>
+<ul class="skill-list">
+<li class="skill-item">Python</li>
+<li class="skill-item">FastAPI</li>
+<li class="skill-item">PostgreSQL</li>
+<li class="skill-item">Redis</li>
+<li class="skill-item">Telegram API</li>
+<li class="skill-item">REST API design</li>
+</ul>
+</div>
 </div>
 <div class="skills-bottom">
-<div class="skill-group"><h4>Tools &amp; Design</h4><div class="skill-list"><span class="skill-item">Git &amp; GitHub</span><span class="skill-item">Firebase Console</span><span class="skill-item">Figma</span><span class="skill-item">UI/UX Design</span><span class="skill-item">Graphic Design</span></div></div>
-<div class="skill-group"><h4>Languages</h4><div class="skill-list"><span class="skill-item">Uzbek &mdash; Native</span><span class="skill-item">Russian &mdash; Fluent</span><span class="skill-item">English &mdash; Technical</span></div></div>
+<div class="skill-group">
+<h4 data-i18n="skill_tools">Tools &amp; Design</h4>
+<ul class="skill-list">
+<li class="skill-item">Git &amp; GitHub</li>
+<li class="skill-item">Firebase Console</li>
+<li class="skill-item">Figma</li>
+<li class="skill-item">UI/UX Design</li>
+<li class="skill-item">Graphic Design</li>
+</ul>
+</div>
+<div class="skill-group">
+<h4 data-i18n="skill_languages">Languages</h4>
+<ul class="skill-list">
+<li class="skill-item" data-i18n="lang_uz">Uzbek &mdash; Native</li>
+<li class="skill-item" data-i18n="lang_ru">Russian &mdash; Fluent</li>
+<li class="skill-item" data-i18n="lang_en">English &mdash; Technical</li>
+</ul>
+</div>
 </div>
 </div>
 
 <hr class="divider"/>
 
 <div class="contact-section" id="contact">
-<div class="sec-label">Get In Touch</div>
-<div class="sec-title">Contact me</div>
 <div class="contact-inner">
 <div class="contact-left">
-<h2>Let's build something together</h2>
-<p>I'm open to Flutter developer roles, freelance projects and collaborations. Feel free to reach out through any of these channels &mdash; I respond fast.</p>
+<div class="sec-label" data-i18n="contact_label">Get in touch</div>
+<h2 data-i18n="contact_title">Let's work together</h2>
+<p data-i18n="contact_sub">Open to Flutter developer roles. Feel free to reach out!</p>
 </div>
 <div class="contact-right">
 <a class="contact-card" href="mailto:tolibtal0@gmail.com">
-<div class="contact-card-icon">✉</div>
-<div class="contact-card-info"><div class="contact-card-label">Email</div><div class="contact-card-value">tolibtal0@gmail.com</div></div>
-<div class="contact-card-arrow">&#8594;</div>
+<div class="contact-card-icon">✉️</div>
+<div class="contact-card-info">
+<div class="contact-card-label">Email</div>
+<div class="contact-card-value">tolibtal0@gmail.com</div>
+</div>
+<div class="contact-card-arrow">→</div>
 </a>
 <a class="contact-card" href="https://t.me/taltolib" target="_blank">
-<div class="contact-card-icon">✈</div>
-<div class="contact-card-info"><div class="contact-card-label">Telegram</div><div class="contact-card-value">@taltolib</div></div>
-<div class="contact-card-arrow">&#8594;</div>
+<div class="contact-card-icon">✈️</div>
+<div class="contact-card-info">
+<div class="contact-card-label">Telegram</div>
+<div class="contact-card-value">@taltolib</div>
+</div>
+<div class="contact-card-arrow">→</div>
 </a>
 <a class="contact-card" href="tel:+998918010406">
 <div class="contact-card-icon">📞</div>
-<div class="contact-card-info"><div class="contact-card-label">Phone</div><div class="contact-card-value">+998 91 801-04-06</div></div>
-<div class="contact-card-arrow">&#8594;</div>
+<div class="contact-card-info">
+<div class="contact-card-label" data-i18n="contact_phone">Phone</div>
+<div class="contact-card-value">+998 91 801-04-06</div>
+</div>
+<div class="contact-card-arrow">→</div>
 </a>
 <a class="contact-card" href="https://github.com/taltolib" target="_blank">
-<div class="contact-card-icon">⌥</div>
-<div class="contact-card-info"><div class="contact-card-label">GitHub</div><div class="contact-card-value">github.com/taltolib</div></div>
-<div class="contact-card-arrow">&#8594;</div>
+<div class="contact-card-icon">🐙</div>
+<div class="contact-card-info">
+<div class="contact-card-label">GitHub</div>
+<div class="contact-card-value">github.com/taltolib</div>
+</div>
+<div class="contact-card-arrow">→</div>
 </a>
-<a class="contact-card" href="https://www.linkedin.com/in/tolib-talibov-7a32b43b2" target="_blank">
-<div class="contact-card-icon">in</div>
-<div class="contact-card-info"><div class="contact-card-label">LinkedIn</div><div class="contact-card-value">Tolib Talibov</div></div>
-<div class="contact-card-arrow">&#8594;</div>
+<a class="contact-card" href="https://linkedin.com/in/tolib-talibov-7a32b43b2" target="_blank">
+<div class="contact-card-icon">💼</div>
+<div class="contact-card-info">
+<div class="contact-card-label">LinkedIn</div>
+<div class="contact-card-value">in/tolib-talibov</div>
+</div>
+<div class="contact-card-arrow">→</div>
 </a>
 </div>
 </div>
 </div>
 
-<footer><p>&copy; 2026 Tolib Talibov &middot; Flutter Developer &middot; Tashkent / Samarkand</p></footer>
+<footer data-i18n="footer">Tolib Talibov &middot; Flutter Developer &middot; Tashkent, Uzbekistan</footer>
 
 <script>
-function buildGallery(trackId, imgs, animate) {
-  const track = document.getElementById(trackId);
+// i18n translations
+const translations = {
+  en: {
+    nav_projects: 'Projects', nav_skills: 'Skills', nav_contact: 'Contact',
+    hero_sub: 'Building cross-platform mobile apps with clean architecture, BLoC state management and pixel-perfect UI. Tashkent / Samarkand, Uzbekistan.',
+    projects_label: 'Work & Projects', projects_title: "What I've built",
+    easy_type: 'Commercial · Flutter', easy_title: 'EasyBooking — B2C Travel App',
+    easy_desc: 'Cross-platform travel app for searching and booking tours. Settings module, custom widget library, BLoC, go_router, REST API integration.',
+    easy_private: 'Private · Global Travel Space',
+    progress_type: 'Pet Project · Flutter', progress_title: 'Progress App — Language Learning',
+    progress_desc: 'Gamified vocabulary app. 56,000-word local DB, Firebase Phone Auth + Google Sign-In, levels, progress tracking, smooth animations.',
+    finance_type: 'Pet Project · Flutter + Python', finance_title: 'Finance App — Personal Analytics',
+    finance_desc: 'Reads transactions via Telegram API in real-time. Kanban expense board, charts, category filters, Telegram SMS auth.',
+    bmi_type: 'Pet Project · Flutter', bmi_title: 'BMI Calculator',
+    bmi_desc: 'Clean BMI calculator with age, weight, height and gender inputs. Personalized health status with visual indicator.',
+    view_github: 'View on GitHub',
+    skills_label: 'Technical Skills', skills_title: 'What I work with',
+    skill_flutter: 'Flutter / Mobile', skill_backend: 'Backend', skill_tools: 'Tools & Design', skill_languages: 'Languages',
+    lang_uz: 'Uzbek — Native', lang_ru: 'Russian — Fluent', lang_en: 'English — Technical',
+    contact_label: 'Get in touch', contact_title: "Let's work together",
+    contact_sub: 'Open to Flutter developer roles. Feel free to reach out!',
+    contact_phone: 'Phone',
+    footer: 'Tolib Talibov · Flutter Developer · Tashkent, Uzbekistan'
+  },
+  ru: {
+    nav_projects: 'Проекты', nav_skills: 'Навыки', nav_contact: 'Контакты',
+    hero_sub: 'Разрабатываю кроссплатформенные мобильные приложения с чистой архитектурой, BLoC и pixel-perfect UI. Ташкент / Самарканд, Узбекистан.',
+    projects_label: 'Работы и Проекты', projects_title: 'Что я создал',
+    easy_type: 'Коммерческий · Flutter', easy_title: 'EasyBooking — B2C Туристическое Приложение',
+    easy_desc: 'Кроссплатформенное приложение для поиска и бронирования туров. Модуль настроек, кастомная библиотека виджетов, BLoC, go_router, REST API.',
+    easy_private: 'Закрытый · Global Travel Space',
+    progress_type: 'Пет Проект · Flutter', progress_title: 'Progress App — Изучение Языков',
+    progress_desc: 'Геймифицированное приложение для словарного запаса. 56,000 слов в локальной БД, Firebase Phone Auth + Google Sign-In, уровни, отслеживание прогресса.',
+    finance_type: 'Пет Проект · Flutter + Python', finance_title: 'Finance App — Личная Аналитика',
+    finance_desc: 'Читает транзакции через Telegram API в реальном времени. Kanban доска расходов, графики, фильтры по категориям, Telegram SMS аутентификация.',
+    bmi_type: 'Пет Проект · Flutter', bmi_title: 'BMI Калькулятор',
+    bmi_desc: 'Чистый калькулятор ИМТ с вводом возраста, веса, роста и пола. Персонализированный статус здоровья с визуальным индикатором.',
+    view_github: 'Смотреть на GitHub',
+    skills_label: 'Технические Навыки', skills_title: 'С чем я работаю',
+    skill_flutter: 'Flutter / Мобильная', skill_backend: 'Бэкенд', skill_tools: 'Инструменты и Дизайн', skill_languages: 'Языки',
+    lang_uz: 'Узбекский — Родной', lang_ru: 'Русский — Свободно', lang_en: 'Английский — Технический',
+    contact_label: 'Связаться', contact_title: 'Давайте работать вместе',
+    contact_sub: 'Открыт к ролям Flutter-разработчика. Пишите!',
+    contact_phone: 'Телефон',
+    footer: 'Толиб Толибов · Flutter-разработчик · Ташкент, Узбекистан'
+  },
+  uz: {
+    nav_projects: 'Loyihalar', nav_skills: "Ko'nikmalar", nav_contact: 'Aloqa',
+    hero_sub: "Toza arxitektura, BLoC va pixel-perfect UI bilan ko'p platformali mobil ilovalar yarataman. Toshkent / Samarqand, O'zbekiston.",
+    projects_label: 'Ish va Loyihalar', projects_title: 'Men nima yaratdim',
+    easy_type: 'Tijorat · Flutter', easy_title: 'EasyBooking — B2C Sayohat Ilovasi',
+    easy_desc: "Turlarni qidirish va bron qilish uchun ko'p platformali ilova. Sozlamalar moduli, maxsus vidjet kutubxonasi, BLoC, go_router, REST API integratsiyasi.",
+    easy_private: 'Yopiq · Global Travel Space',
+    progress_type: "Pet Loyiha · Flutter", progress_title: "Progress App — Til O'rganish",
+    progress_desc: "Gamifikatsiyalangan lug'at ilovasi. 56,000 so'zli mahalliy DB, Firebase Phone Auth + Google Sign-In, darajalar, progress kuzatuvi.",
+    finance_type: 'Pet Loyiha · Flutter + Python', finance_title: 'Finance App — Shaxsiy Tahlil',
+    finance_desc: "Telegram API orqali real vaqtda tranzaksiyalarni o'qiydi. Kanban xarajatlar taxtasi, grafiklar, kategoriya filtrlari, Telegram SMS autentifikatsiya.",
+    bmi_type: 'Pet Loyiha · Flutter', bmi_title: 'BMI Kalkulyator',
+    bmi_desc: "Yosh, vazn, bo'y va jins kiritishlari bilan toza BMI kalkulyator. Vizual indikator bilan shaxsiylashtirilgan sog'liq holati.",
+    view_github: "GitHub'da ko'rish",
+    skills_label: 'Texnik Ko'nikmalar', skills_title: 'Men nima bilan ishlaman',
+    skill_flutter: 'Flutter / Mobil', skill_backend: 'Backend', skill_tools: 'Asboblar va Dizayn', skill_languages: 'Tillar',
+    lang_uz: "O'zbek — Ona tili", lang_ru: "Rus — Erkin", lang_en: "Ingliz — Texnik",
+    contact_label: 'Bog'lanish', contact_title: 'Keling, birga ishlaymiz',
+    contact_sub: "Flutter developer lavozimlari uchun ochiqman. Murojaat qiling!",
+    contact_phone: 'Telefon',
+    footer: "Tolib Tolibov · Flutter Developer · Toshkent, O'zbekiston"
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === lang.toUpperCase());
+  });
+  const t = translations[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.textContent = t[key];
+  });
+}
+
+// Build galleries
+const progressImgs = Array.from({length:13},(_,i)=>
+  `https://raw.githubusercontent.com/taltolib/progress_app_language_learn/master/assets/image/screen/${i+1}.jpg`);
+const financeImgs = Array.from({length:13},(_,i)=>
+  `https://raw.githubusercontent.com/taltolib/finance_app/master/assets/image_github/i_${i+1}.jpg`);
+const bmiImgs = ['11','22','33','44'].map(n=>
+  `https://raw.githubusercontent.com/taltolib/bmi_calculator/master/images/${n}.png`);
+
+function buildAnimTrack(id, imgs) {
+  const track = document.getElementById(id);
   if (!track) return;
-  const toLoad = animate ? [...imgs, ...imgs] : imgs;
-  if (!animate) track.classList.add('no-anim');
-  toLoad.forEach(src => {
+  const doubled = [...imgs, ...imgs];
+  doubled.forEach(src => {
     const img = document.createElement('img');
     img.src = src;
-    img.alt = '';
     img.loading = 'lazy';
-    img.onerror = function(){ this.style.display='none'; };
+    img.alt = '';
     track.appendChild(img);
   });
 }
 
-const progressImgs = Array.from({length:13},(_,i)=>
-  `https://raw.githubusercontent.com/taltolib/progress_app_language_learn/master/assets/image/screen/${i+1}.jpg`
-);
-const financeImgs = Array.from({length:13},(_,i)=>
-  `https://raw.githubusercontent.com/taltolib/finance_app/master/assets/image_github/i_${i+1}.jpg`
-);
-const bmiImgs = ['11','22','33','44'].map(n=>
-  `https://raw.githubusercontent.com/taltolib/bmi_calculator/master/images/${n}.png`
-);
+function buildStaticTrack(id, imgs) {
+  const track = document.getElementById(id);
+  if (!track) return;
+  // Duplicate images so BMI also scrolls (8 total)
+  const doubled = [...imgs, ...imgs];
+  doubled.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.loading = 'lazy';
+    img.alt = '';
+    track.appendChild(img);
+  });
+}
 
-buildGallery('progress-track', progressImgs, true);
-buildGallery('finance-track', financeImgs, true);
-buildGallery('bmi-track', bmiImgs, false);
+buildAnimTrack('progress-track', progressImgs);
+buildAnimTrack('finance-track', financeImgs);
+buildStaticTrack('bmi-track', bmiImgs);
 </script>
 </body>
 </html>
